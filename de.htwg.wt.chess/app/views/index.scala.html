@@ -1,9 +1,15 @@
-@(message: String)(controller: de.htwg.chess.controller.IChessController)
+@(controller: de.htwg.chess.controller.IChessController)
 
-@main("Welcome to Play Framework") {
+@main("Welcome to Chess") {
 
     <div class="well">
-        <h1>@message</h1>
+        <h3>Status: @controller.getStatusMessage()</h3>
+        <h3>Turn: @controller.getTurnMessage()</h3>
+        
+        @for(line <- controller.toString().split("\n")) {
+			@line<br>
+  		}
     </div>
+
 
 }

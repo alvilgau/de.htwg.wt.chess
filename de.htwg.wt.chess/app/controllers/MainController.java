@@ -10,13 +10,12 @@ public class MainController extends Controller {
 	static IChessController controller = Chess.getInstance().getController();
 
 	public static Result index() {
-		return ok(views.html.index.render("Hello Chess", controller));
+		return ok(views.html.index.render(controller));
 	}
 
 	public static Result commandline(String command) {
 		Chess.getInstance().getTui().processInputLine(command);
-		return ok(views.html.index.render("Got your position " + command,
-				controller));
+		return ok(views.html.index.render(controller));
 	}
 
 }

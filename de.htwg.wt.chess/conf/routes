@@ -3,6 +3,8 @@
 # ~~~~
 
 GET     /                           controllers.MainController.index()
+GET		/chess						controllers.MainController.chess()
+GET		/contact					controllers.MainController.contact()
 GET		/commandline/:command		controllers.MainController.commandline(command:String)
 
 # Map static resources from the /public folder to the /assets URL path

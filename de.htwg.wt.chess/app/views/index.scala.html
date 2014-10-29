@@ -1,28 +1,8 @@
-@(controller: de.htwg.chess.controller.IChessController)
-
 @main("Welcome to Chess") {
 
-	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
-	
-    <div class="well">
-        <h3>Status: @controller.getStatusMessage()</h3>
-        <h3>Turn: @controller.getTurnMessage()</h3>
-        
-		<div class="playground">
-	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
-	        	<div class="row@row">
-	        	
-	        		@for(column <- 0 until controller.getFieldSize) {
-	        			@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
-	        				<div class="field @fieldColor @controller.getFieldValue(column, row)"></div>
-	        			}
-	        		}
-	        		
-	        		<div class="clear"></div>
-	        	</div>
-	        }
-        </div>
-        
-    </div>
-    
+	<div class="jumbotron">
+		<h1>Welcome to Chess</h1>
+		<p>A simple chess game!</p>
+		<p><a href="chess" class="btn btn-primary btn-lg" role="button">Play Now!</a></p>
+	</div>
 }

@@ -2,6 +2,8 @@
 
 @main("Welcome to Chess") {
 
+	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
+	
     <div class="well">
         <h3>Status: @controller.getStatusMessage()</h3>
         <h3>Turn: @controller.getTurnMessage()</h3>

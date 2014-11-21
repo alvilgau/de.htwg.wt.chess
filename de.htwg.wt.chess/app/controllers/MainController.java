@@ -1,15 +1,17 @@
 package controllers;
 
-import java.util.HashMap;
-
+import models.FieldObserver;
+import play.libs.F.Callback0;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.WebSocket;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import de.htwg.chess.Chess;
 import de.htwg.chess.controller.IChessController;
+import de.htwg.util.observer.IObserver;
 
 public class MainController extends Controller {
 
@@ -31,12 +33,25 @@ public class MainController extends Controller {
 		int posX = Integer.parseInt(command.substring(0, 1));
 		int posY = Integer.parseInt(command.substring(1, 2));
 		controller.handleMovement(posX, posY);
-		return ok(controllerToJson());
+		return ok(Json.toJson(controller));
 	}
 
-	private static JsonNode controllerToJson() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("selected", controller.isSelect());
-		return Json.toJson(map);
+	public static WebSocket<JsonNode> connectWebSocket() {
+		return new WebSocket<JsonNode>() {
+
+			public void onReady(WebSocket.In<JsonNode> in,
+					WebSocket.Out<JsonNode> out) {
+
+				IObserver fieldObserver = new FieldObserver(controller, out);
+
+				in.onClose(new Callback0() {
+					public void invoke() throws Throwable {
+						controller.removeObserver(fieldObserver);
+					}
+				});
+			}
+
+		};
 	}
+
 }

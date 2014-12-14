@@ -1,0 +1,77 @@
+#playground {
+	margin-left: auto;
+	margin-right: auto;
+	width: 512px;
+}
+
+.field {
+	float: left;
+	width: 64px;
+	height: 64px;
+}
+
+.selected {
+	border-style: solid;
+	border-width: 3px;
+	background-origin: border-box;
+}
+
+.dark {
+	background-color: #A4785B;
+}
+
+.light {
+	background-color: #E5CEA4;
+}
+
+.clear {
+	clear: both;
+}
+
+.blackL {
+	background-image: url("../images/blackBishop.png");
+}
+
+.whiteL {
+	background-image: url("../images/whiteBishop.png");
+}
+
+.blackK {
+	background-image: url("../images/blackKing.png");
+}
+
+.whiteK {
+	background-image: url("../images/whiteKing.png");
+}
+
+.blackP {
+	background-image: url("../images/blackKnight.png");
+}
+
+.whiteP {
+	background-image: url("../images/whiteKnight.png");
+}
+
+.blackB {
+	background-image: url("../images/blackPawn.png");
+}
+
+.whiteB {
+	background-image: url("../images/whitePawn.png");
+}
+
+.blackD {
+	background-image: url("../images/blackQueen.png");
+}
+
+.whiteD {
+	background-image: url("../images/whiteQueen.png");
+}
+
+.blackT {
+	background-image: url("../images/blackRook.png");
+}
+
+.whiteT {
+	background-image: url("../images/whiteRook.png");
+}

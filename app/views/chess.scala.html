@@ -1,0 +1,28 @@
+@(controller: de.htwg.chess.controller.IChessController)
+
+@main("Play Chess") {
+
+	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
+	<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
+	
+	<div id="statusMessages">
+		<h3 id="status">Status: @controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
+	    <h3 id="turn">Turn: @controller.getTurnMessage()</h3>
+	</div>
+	
+    <div class="well" id="gameContent">
+		<div id="playground">
+	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
+	        	@for(column <- 0 until controller.getFieldSize) {
+	        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
+	        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
+	        				onclick="handleMovement(@column, @row)"></div>
+	        		}
+	        	}
+				<div class="clear"></div>
+	        }
+        </div>
+        
+    </div>
+    
+}

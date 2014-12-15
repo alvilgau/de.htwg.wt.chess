@@ -36,7 +36,7 @@ function refreshGameContent(data) {
 
 // Connect with WebSocket
 function connect() {
-	var socket = new WebSocket("ws://localhost:9000/socket");
+	var socket = new WebSocket("ws://" + location.host + "/socket");
 
 	socket.onmessage = function(msg) {
 		var data = JSON.parse(msg.data);

@@ -17,7 +17,7 @@ function handleMovement(column, row) {
 				// set border at selected field
 				$("#pos" + column + row).addClass("selected");
 			} else if (data.exchange) {
-				// exchange
+				// TODO: exchange
 				alert("exchange");
 			} else {
 				refreshGameContent(data);

@@ -1,10 +1,14 @@
 package controllers;
 
 import models.FieldObserver;
+import play.data.Form;
 import play.libs.F.Callback0;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Http.Context;
+import play.mvc.Security.Authenticated;
+import play.mvc.Security.Authenticator;
 import play.mvc.WebSocket;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,6 +21,7 @@ public class MainController extends Controller {
 
 	static IChessController controller = Chess.getInstance().getController();
 
+	@Authenticated(Secured.class)
 	public static Result index() {
 		return ok(views.html.index.render());
 	}
@@ -52,6 +57,57 @@ public class MainController extends Controller {
 			}
 
 		};
+	}
+
+	public static Result login() {
+		return ok(views.html.login.render(Form.form(Login.class)));
+	}
+
+	public static Result logout() {
+		session().clear();
+		return redirect(routes.MainController.index());
+	}
+
+	public static Result authenticate() {
+		Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+
+		if (loginForm.hasErrors()) {
+			return badRequest(views.html.login.render(loginForm));
+		} else {
+			session().clear();
+			session("email", loginForm.get().email);
+			return redirect(routes.MainController.index());
+		}
+	}
+
+	public static class Login {
+
+		private final static String defaultEmail = "admin@chess.de";
+		private final static String defaultPasswort = "admin";
+
+		public String email;
+		public String password;
+
+		public String validate() {
+			if (email.equals(defaultEmail) && password.equals(defaultPasswort)) {
+				return null;
+			} else {
+				return "Invalid user or password";
+			}
+		}
+	}
+
+	public static class Secured extends Authenticator {
+
+		@Override
+		public String getUsername(Context ctx) {
+			return ctx.session().get("email");
+		}
+
+		@Override
+		public Result onUnauthorized(Context ctx) {
+			return redirect(routes.MainController.login());
+		}
 	}
 
 }

@@ -9,12 +9,7 @@ public class MainControllerTest {
 
 	@Before
 	public void setUp() {
-		start(fakeApplication(inMemoryDatabase(), fakeGlobal()));
-	}
-
-	@After
-	public void tearDown() {
-		stop(fakeApplication());
+		start(fakeApplication());
 	}
 
 	@Test
@@ -32,4 +27,12 @@ public class MainControllerTest {
 		assertThat(contentAsString(result)).contains("Welcome to Chess");
 	}
 
+	// @Test
+	// public void testSuccessLogin() {
+	// Map<String, String> loginData = new HashMap<String, String>();
+	// loginData.put("email", "admin@chess.de");
+	// loginData.put("password", "admin");
+	// Result result = callAction(routes.ref.MainController.authenticate(),
+	// fakeRequest().withFormUrlEncodedBody(loginData));
+	// }
 }

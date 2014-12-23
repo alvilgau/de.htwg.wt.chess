@@ -1,12 +1,19 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import models.FieldObserver;
 import play.data.Form;
 import play.libs.F.Callback0;
+import play.libs.F.Function;
+import play.libs.F.Promise;
 import play.libs.Json;
+import play.libs.OpenID;
+import play.libs.OpenID.UserInfo;
 import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.Http.Context;
+import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import play.mvc.Security.Authenticator;
 import play.mvc.WebSocket;
@@ -78,6 +85,44 @@ public class MainController extends Controller {
 			session("email", loginForm.get().email);
 			return redirect(routes.MainController.index());
 		}
+	}
+
+	public static Result auth() {
+		String providerUrl = "https://www.google.com/accounts/o8/id";
+		String returnToUrl = routes.MainController.verify().absoluteURL(
+				request());
+
+		Map<String, String> attrs = new HashMap<>();
+		attrs.put("Email", "http://schema.openid.net/contact/email");
+		attrs.put("FirstName", "http://schema.openid.net/namePerson/first");
+		attrs.put("LastName", "http://schema.openid.net/namePerson/last");
+
+		Promise<String> redirectUrl = OpenID.redirectURL(providerUrl,
+				returnToUrl, attrs);
+		return redirect(redirectUrl.get(1000));
+	}
+
+	public static Promise<Result> verify() {
+		Promise<UserInfo> userInfoPromise = OpenID.verifiedId();
+
+		Promise<Result> resultPromise = userInfoPromise.map(
+				new Function<OpenID.UserInfo, Result>() {
+
+					@Override
+					public Result apply(UserInfo userInfo) throws Throwable {
+						session().clear();
+						session("email", userInfo.attributes.get("Email"));
+						return redirect(routes.MainController.index());
+					}
+				}).recover(new Function<Throwable, Result>() {
+
+			@Override
+			public Result apply(Throwable throwable) throws Throwable {
+				return redirect(routes.MainController.login());
+			}
+		});
+
+		return resultPromise;
 	}
 
 	public static class Login {

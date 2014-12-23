@@ -10,7 +10,9 @@
 		<script type='text/javascript' src='@routes.Assets.at("javascripts/bootstrap.min.js")'></script>
 		<link rel='stylesheet' href='@routes.Assets.at("stylesheets/bootstrap.min.css")'>
 		<link rel='stylesheet' href='@routes.Assets.at("stylesheets/bootstrap-theme.min.css")'>
+		<link rel='stylesheet' href='@routes.Assets.at("stylesheets/bootstrap-social.css")'>
 		<link rel='stylesheet' href='@routes.Assets.at("stylesheets/login.css")'>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	</head>
 	
 	<body>
@@ -35,7 +37,11 @@
 	          		</label>
 	        	</div>
 	        	-->
-	        	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	        	<button class="btn btn-primary btn-block" type="submit">Login</button>
+	        	<a href="/openID/auth" class="btn btn-block btn-social btn-google-plus">
+				  <i class="fa fa-google"></i>
+				  Sign in with Google
+				</a>
 			}
 		</div>
 	</body>

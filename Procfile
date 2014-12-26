@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/htwg-chess -Dhttp.port=$PORT -Dconfig.resource=heroku.conf
+web: target/universal/stage/bin/de-htwg-wt-chess -Dhttp.port=$PORT -Dconfig.resource=heroku.conf

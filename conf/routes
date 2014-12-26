@@ -10,8 +10,8 @@ GET		/socket						controllers.MainController.connectWebSocket()
 GET		/login						controllers.MainController.login()
 POST	/login						controllers.MainController.authenticate()
 GET		/logout						controllers.MainController.logout()
-GET		/openID/auth				controllers.MainController.auth()
-GET		/openID/verify				controllers.MainController.verify()
+GET		/login/google				controllers.MainController.googleLogin()
+GET     /auth						org.pac4j.play.CallbackController.callback()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

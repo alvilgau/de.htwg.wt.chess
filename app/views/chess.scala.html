@@ -4,8 +4,13 @@
 
 	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
 	<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
+
+	<p>
+		<button class="btn btn-default" type="button" onclick="restartGame()">Restart Game</button>
+	</p>
 	
-	<div id="statusMessages">
+
+	<div class="well" id="statusMessages">
 		<h3 id="status">Status: @controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
 	    <h3 id="turn">Turn: @controller.getTurnMessage()</h3>
 	</div>
@@ -22,7 +27,5 @@
 				<div class="clear"></div>
 	        }
         </div>
-        
     </div>
-    
 }

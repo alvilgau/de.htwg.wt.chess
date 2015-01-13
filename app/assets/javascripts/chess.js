@@ -8,10 +8,7 @@ function handleMovement(column, row) {
 		type : "GET",
 		url : "move/" + column + row,
 		success : function(data) {
-			// update status message
-			$("#statusMessages #status").text(
-					"Status: " + data.statusMessage + " "
-							+ data.checkmateMessage);
+			refreshStatusMessage(data);
 
 			if (data.select) {
 				// set border at selected field
@@ -19,9 +16,7 @@ function handleMovement(column, row) {
 			} else if (data.exchange) {
 				// TODO: exchange
 				alert("exchange");
-			} else {
-				refreshGameContent(data);
-			}
+			} 
 		}
 	});
 }
@@ -32,6 +27,12 @@ function refreshGameContent(data) {
 	$("#statusMessages #turn").text("Turn: " + data.turnMessage);
 	// refresh game content
 	$("#gameContent").load("/chess #playground");
+}
+
+// Update status message
+function refreshStatusMessage(data) {
+	$("#statusMessages #status").text(
+			"Status: " + data.statusMessage + " " + data.checkmateMessage);
 }
 
 // Connect with WebSocket
@@ -45,5 +46,15 @@ function connect() {
 			refreshGameContent(data);
 		}
 	};
+}
 
+// Start a new game
+function restartGame() {
+	$.ajax({
+		type : "GET",
+		url : "/restart",
+		success : function(data) {
+			refreshStatusMessage(data);
+		}
+	});
 }

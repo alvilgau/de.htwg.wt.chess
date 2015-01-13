@@ -4,6 +4,7 @@
 
 GET     /                           controllers.MainController.index()
 GET		/chess						controllers.MainController.chess()
+GET		/restart					controllers.MainController.restart()
 GET		/contact					controllers.MainController.contact()
 GET		/move/:command				controllers.MainController.handleMovement(command:String)
 GET		/socket						controllers.MainController.connectWebSocket()

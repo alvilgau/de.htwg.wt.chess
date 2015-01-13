@@ -33,6 +33,11 @@ public class MainController extends JavaController {
 		return ok(views.html.chess.render(controller));
 	}
 
+	public static Result restart() {
+		controller.restart();
+		return ok(Json.toJson(controller));
+	}
+
 	public static Result contact() {
 		return ok(views.html.contact.render());
 	}

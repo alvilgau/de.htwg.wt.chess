@@ -33,6 +33,26 @@ public class MainController extends JavaController {
 		return ok(views.html.chess.render(controller));
 	}
 
+	public static Result handleMovement(String command) {
+		int posX = Integer.parseInt(command.substring(0, 1));
+		int posY = Integer.parseInt(command.substring(1, 2));
+		controller.handleMovement(posX, posY);
+		return ok(Json.toJson(controller));
+	}
+
+	public static Result exchange(String figure) {
+		if (figure.equals("knight")) {
+			controller.exchangeKnight();
+		} else if (figure.equals("bishop")) {
+			controller.exchangeBishop();
+		} else if (figure.equals("rook")) {
+			controller.exchangeRook();
+		} else {
+			controller.exchangeQueen();
+		}
+		return ok();
+	}
+
 	public static Result restart() {
 		controller.restart();
 		return ok(Json.toJson(controller));
@@ -40,13 +60,6 @@ public class MainController extends JavaController {
 
 	public static Result contact() {
 		return ok(views.html.contact.render());
-	}
-
-	public static Result handleMovement(String command) {
-		int posX = Integer.parseInt(command.substring(0, 1));
-		int posY = Integer.parseInt(command.substring(1, 2));
-		controller.handleMovement(posX, posY);
-		return ok(Json.toJson(controller));
 	}
 
 	public static WebSocket<JsonNode> connectWebSocket() {

@@ -1,4 +1,5 @@
 $(function() {
+	$("#exchangeAlert").hide();
 	connect();
 });
 
@@ -14,11 +15,18 @@ function handleMovement(column, row) {
 				// set border at selected field
 				$("#pos" + column + row).addClass("selected");
 			} else if (data.exchange) {
-				// TODO: exchange
-				alert("exchange");
+				$("#exchangeAlert").show();
 			} 
 		}
 	});
+}
+
+function exchange(figure) {
+	$.ajax({
+		type : "GET",
+		url : "exchange/" + figure
+	});
+	$("#exchangeAlert").hide();
 }
 
 // Update turn message and refresh game content
@@ -57,4 +65,5 @@ function restartGame() {
 			refreshStatusMessage(data);
 		}
 	});
+	$("#exchangeAlert").hide();
 }

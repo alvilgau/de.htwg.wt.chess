@@ -29,6 +29,7 @@ public class MainController extends JavaController {
 		return ok(views.html.index.render());
 	}
 
+	@Authenticated(Secured.class)
 	public static Result chess() {
 		return ok(views.html.chess.render(controller));
 	}
@@ -58,6 +59,7 @@ public class MainController extends JavaController {
 		return ok(Json.toJson(controller));
 	}
 
+	@Authenticated(Secured.class)
 	public static Result contact() {
 		return ok(views.html.contact.render());
 	}

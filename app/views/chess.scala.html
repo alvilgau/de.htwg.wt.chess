@@ -24,8 +24,27 @@
 			<button class="btn btn-default" type="button" onclick="exchange('queen')">Queen</button>
 		</p>
 	</div>
+
+	<div id="modalGameOver" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Game over</h4>
+				</div>
+				<div class="modal-body">
+					<p id="modalGameOverContent"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
-    <div class="well" id="gameContent">
+	<div class="well" id="gameContent">
 		<div id="playground">
 	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
 	        	@for(column <- 0 until controller.getFieldSize) {

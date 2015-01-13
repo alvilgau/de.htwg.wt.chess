@@ -9,14 +9,12 @@ function handleMovement(column, row) {
 		type : "GET",
 		url : "move/" + column + row,
 		success : function(data) {
-			refreshStatusMessage(data);
-
 			if (data.select) {
 				// set border at selected field
 				$("#pos" + column + row).addClass("selected");
 			} else if (data.exchange) {
 				$("#exchangeAlert").show();
-			} 
+			}
 		}
 	});
 }
@@ -29,18 +27,22 @@ function exchange(figure) {
 	$("#exchangeAlert").hide();
 }
 
-// Update turn message and refresh game content
-function refreshGameContent(data) {
-	// update turn message
-	$("#statusMessages #turn").text("Turn: " + data.turnMessage);
-	// refresh game content
-	$("#gameContent").load("/chess #playground");
+// Start a new game
+function restartGame() {
+	$.ajax({
+		type : "GET",
+		url : "/restart"
+	});
+	$("#exchangeAlert").hide();
 }
 
-// Update status message
-function refreshStatusMessage(data) {
+// Update status messages
+function refreshStatusMessages(data) {
+	// update status message
 	$("#statusMessages #status").text(
 			"Status: " + data.statusMessage + " " + data.checkmateMessage);
+	// update turn message
+	$("#statusMessages #turn").text("Turn: " + data.turnMessage);
 }
 
 // Connect with WebSocket
@@ -50,20 +52,14 @@ function connect() {
 
 	socket.onmessage = function(msg) {
 		var data = JSON.parse(msg.data);
+		refreshStatusMessages(data);
 		if (!data.select && !data.exchange) {
-			refreshGameContent(data);
+			// refresh game content
+			$("#gameContent").load("/chess #playground");
+		}
+		if (data.gameover) {
+			$("#modalGameOverContent").text(data.checkmateMessage);
+			$("#modalGameOver").modal("show");
 		}
 	};
-}
-
-// Start a new game
-function restartGame() {
-	$.ajax({
-		type : "GET",
-		url : "/restart",
-		success : function(data) {
-			refreshStatusMessage(data);
-		}
-	});
-	$("#exchangeAlert").hide();
 }

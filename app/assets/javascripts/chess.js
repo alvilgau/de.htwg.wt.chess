@@ -39,10 +39,9 @@ function restartGame() {
 // Update status messages
 function refreshStatusMessages(data) {
 	// update status message
-	$("#statusMessages #status").text(
-			"Status: " + data.statusMessage + " " + data.checkmateMessage);
+	$("#status").text(data.statusMessage + " " + data.checkmateMessage);
 	// update turn message
-	$("#statusMessages #turn").text("Turn: " + data.turnMessage);
+	$("#turn").text(data.turnMessage);
 }
 
 // Connect with WebSocket

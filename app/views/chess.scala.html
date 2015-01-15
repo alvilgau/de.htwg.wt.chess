@@ -5,15 +5,6 @@
 	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
 	<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
 
-	<p>
-		<button class="btn btn-default" type="button" onclick="restartGame()">Restart Game</button>
-	</p>
-	
-	<div class="well" id="statusMessages">
-		<h3 id="status">Status: @controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
-	    <h3 id="turn">Turn: @controller.getTurnMessage()</h3>
-	</div>
-	
 	<div id="exchangeAlert" class="alert alert-info" role="alert">
 		<h4>Exchange!</h4>
 		<p>Pawn reaches end of the playground. Please choose a new Figure for the exchange:</p>
@@ -44,17 +35,31 @@
 		</div>
 	</div>
 	
-	<div class="well" id="gameContent">
-		<div id="playground">
-	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
-	        	@for(column <- 0 until controller.getFieldSize) {
-	        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
-	        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
-	        				onclick="handleMovement(@column, @row)"></div>
-	        		}
-	        	}
-				<div class="clear"></div>
-	        }
-        </div>
+	<div class="row well">
+		<div id="gameContent" class="col-md-6">
+			<div id="playground" class="center-block">
+		        @for(row <- controller.getFieldSize-1 to 0 by -1) {
+		        	@for(column <- 0 until controller.getFieldSize) {
+		        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
+		        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
+		        				onclick="handleMovement(@column, @row)"></div>
+		        		}
+		        	}
+					<div class="clear"></div>
+		        }
+		    </div>
+	    </div>
+	    
+		<div class="col-md-3">
+			<h2 class="text-center">Status</h2>
+			<h3 class="text-center" id="status">@controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
+		</div>
+		
+		<div class="col-md-3">
+			<h2 class="text-center">Turn</h2>
+		    <h3 class="text-center" id="turn">@controller.getTurnMessage()</h3>
+		</div>
     </div>
+    
+    <button class="btn btn-default btn-lg btn-block" type="button" onclick="restartGame()">Restart Game</button>
 }

@@ -1,18 +1,28 @@
 #playground {
-	margin-left: auto;
+	width: 100%;
+	border-style: solid;
+	border-width: 2px;
 	margin-right: auto;
-	width: 512px;
+	margin-left: auto;
 }
 
 .field {
 	float: left;
-	width: 64px;
-	height: 64px;
+	width: 12.5%;
+	height: 12.5%;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.field:hover {
+	background-color: lime;
+	opacity: 0.5;
 }
 
 .selected {
 	border-style: solid;
 	border-width: 3px;
+	border-color: cornflowerblue;
 	background-origin: border-box;
 }
 
@@ -29,49 +39,53 @@
 }
 
 .blackL {
-	background-image: url("../images/blackBishop.png");
+	content: url("../images/blackBishop.png");
 }
 
 .whiteL {
-	background-image: url("../images/whiteBishop.png");
+	content: url("../images/whiteBishop.png");
 }
 
 .blackK {
-	background-image: url("../images/blackKing.png");
+	content: url("../images/blackKing.png");
 }
 
 .whiteK {
-	background-image: url("../images/whiteKing.png");
+	content: url("../images/whiteKing.png");
 }
 
 .blackP {
-	background-image: url("../images/blackKnight.png");
+	content: url("../images/blackKnight.png");
 }
 
 .whiteP {
-	background-image: url("../images/whiteKnight.png");
+	content: url("../images/whiteKnight.png");
 }
 
 .blackB {
-	background-image: url("../images/blackPawn.png");
+	content: url("../images/blackPawn.png");
 }
 
 .whiteB {
-	background-image: url("../images/whitePawn.png");
+	content: url("../images/whitePawn.png");
 }
 
 .blackD {
-	background-image: url("../images/blackQueen.png");
+	content: url("../images/blackQueen.png");
 }
 
 .whiteD {
-	background-image: url("../images/whiteQueen.png");
+	content: url("../images/whiteQueen.png");
 }
 
 .blackT {
-	background-image: url("../images/blackRook.png");
+	content: url("../images/blackRook.png");
 }
 
 .whiteT {
-	background-image: url("../images/whiteRook.png");
+	content: url("../images/whiteRook.png");
+}
+
+.empty {
+	content: url("../images/empty.png");
 }

@@ -38,54 +38,55 @@
 	clear: both;
 }
 
-.blackL {
+/* Image content, :after for Firefox and IE */
+.blackL, .blackL:after {
 	content: url("../images/blackBishop.png");
 }
 
-.whiteL {
+.whiteL, .whiteL:after {
 	content: url("../images/whiteBishop.png");
 }
 
-.blackK {
+.blackK, .blackK:after {
 	content: url("../images/blackKing.png");
 }
 
-.whiteK {
+.whiteK, .whiteK:after {
 	content: url("../images/whiteKing.png");
 }
 
-.blackP {
+.blackP, .blackP:after {
 	content: url("../images/blackKnight.png");
 }
 
-.whiteP {
+.whiteP, .whiteP:after {
 	content: url("../images/whiteKnight.png");
 }
 
-.blackB {
+.blackB, .blackB:after {
 	content: url("../images/blackPawn.png");
 }
 
-.whiteB {
+.whiteB, .whiteB:after {
 	content: url("../images/whitePawn.png");
 }
 
-.blackD {
+.blackD, .blackD:after {
 	content: url("../images/blackQueen.png");
 }
 
-.whiteD {
+.whiteD, .whiteD:after {
 	content: url("../images/whiteQueen.png");
 }
 
-.blackT {
+.blackT, .blackT:after {
 	content: url("../images/blackRook.png");
 }
 
-.whiteT {
+.whiteT, .whiteT:after {
 	content: url("../images/whiteRook.png");
 }
 
-.empty {
+.empty, .empty:after {
 	content: url("../images/empty.png");
 }

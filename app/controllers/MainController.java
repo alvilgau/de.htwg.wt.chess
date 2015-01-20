@@ -60,8 +60,8 @@ public class MainController extends JavaController {
 	}
 
 	@Authenticated(Secured.class)
-	public static Result contact() {
-		return ok(views.html.contact.render());
+	public static Result rules() {
+		return ok(views.html.rules.render());
 	}
 
 	public static WebSocket<JsonNode> connectWebSocket() {

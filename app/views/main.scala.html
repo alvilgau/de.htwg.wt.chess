@@ -37,7 +37,16 @@
 					<ul class="nav navbar-nav">
 			        	<li class="active"><a href="/">Home</a></li>
 			            <li><a href="/chess">Play Chess</a></li>
-			            <li><a href="/contact">Contact</a></li>
+			            <li class="dropdown">
+					        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Rules<span class="caret"></span></a>
+					        <ul class="dropdown-menu" role="menu">
+					          <li><a href="/rules#general">General rules</a></li>
+					          <li><a href="/rules#basic">Basic moves</a></li>
+					          <li><a href="/rules#castling">Castling</a></li>
+					          <li><a href="/rules#passant">En passant</a></li>
+					          <li><a href="/rules#promotion">Pawn promotion</a></li>
+					        </ul>
+						</li>
 			     	</ul>
 			     	<ul class="nav navbar-nav navbar-right">
 			            <li><a href="/logout">Logout</a></li>

@@ -6,7 +6,7 @@
 	<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
 
 	<div id="exchangeAlert" class="alert alert-info" role="alert">
-		<h4>Exchange!</h4>
+		<h4><b>Exchange!</b></h4>
 		<p>Pawn reaches end of the playground. Please choose a new Figure for the exchange:</p>
 		<p>
 			<button class="btn btn-default" type="button" onclick="exchange('knight')">Knight</button>
@@ -35,9 +35,9 @@
 		</div>
 	</div>
 	
-	<div class="row well">
+	<div class="row">
 		<div id="gameContent" class="col-md-6">
-			<div id="playground" class="center-block">
+			<div id="playground" class="well">
 		        @for(row <- controller.getFieldSize-1 to 0 by -1) {
 		        	@for(column <- 0 until controller.getFieldSize) {
 		        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
@@ -50,14 +50,18 @@
 		    </div>
 	    </div>
 	    
-		<div class="col-md-3">
-			<h2 class="text-center">Status</h2>
-			<h3 class="text-center" id="status">@controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
+		<div class="col-md-6">
+			<div class="well">
+				<h2 class="text-center">Status</h2>
+				<h3 class="text-center" id="status">@controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
+			</div>
 		</div>
-		
-		<div class="col-md-3">
-			<h2 class="text-center">Turn</h2>
-		    <h3 class="text-center" id="turn">@controller.getTurnMessage()</h3>
+			
+		<div class="col-md-6">
+			<div class="well">
+				<h2 class="text-center">Turn</h2>
+			    <h3 class="text-center" id="turn">@controller.getTurnMessage()</h3>
+		    </div>
 		</div>
     </div>
     

@@ -19,6 +19,14 @@
 	opacity: 0.5;
 }
 
+.dark {
+	background-color: #A4785B;
+}
+
+.light {
+	background-color: #E5CEA4;
+}
+
 .selected {
 	border-style: solid;
 	border-width: 3px;
@@ -26,12 +34,8 @@
 	background-origin: border-box;
 }
 
-.dark {
-	background-color: #A4785B;
-}
-
-.light {
-	background-color: #E5CEA4;
+.possible {
+	background-color: lavender;
 }
 
 .clear {

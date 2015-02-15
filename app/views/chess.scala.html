@@ -1,69 +1,64 @@
 @(controller: de.htwg.chess.controller.IChessController)
 
-@main("Play Chess") {
+<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
+<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
 
-	<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
-	<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
+<div id="exchangeAlert" class="alert alert-info" role="alert">
+	<h4><b>Exchange!</b></h4>
+	<p>Pawn reaches end of the playground. Please choose a new Figure for the exchange:</p>
+	<p>
+		<button class="btn btn-default" type="button" onclick="exchange('knight')">Knight</button>
+		<button class="btn btn-default" type="button" onclick="exchange('bishop')">Bishop</button>
+		<button class="btn btn-default" type="button" onclick="exchange('rook')">Rook</button>
+		<button class="btn btn-default" type="button" onclick="exchange('queen')">Queen</button>
+	</p>
+</div>
 
-	<div id="exchangeAlert" class="alert alert-info" role="alert">
-		<h4><b>Exchange!</b></h4>
-		<p>Pawn reaches end of the playground. Please choose a new Figure for the exchange:</p>
-		<p>
-			<button class="btn btn-default" type="button" onclick="exchange('knight')">Knight</button>
-			<button class="btn btn-default" type="button" onclick="exchange('bishop')">Bishop</button>
-			<button class="btn btn-default" type="button" onclick="exchange('rook')">Rook</button>
-			<button class="btn btn-default" type="button" onclick="exchange('queen')">Queen</button>
-		</p>
-	</div>
-
-	<div id="modalGameOver" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Game over</h4>
-				</div>
-				<div class="modal-body">
-					<p id="modalGameOverContent"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-				</div>
+<div id="modalGameInfo" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 id="modalGameInfoTitle" class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<p id="modalGameInfoContent"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
 			</div>
 		</div>
 	</div>
-	
-	<div class="row">
-		<div id="gameContent" class="col-md-6">
-			<div id="playground" class="well">
-		        @for(row <- controller.getFieldSize-1 to 0 by -1) {
-		        	@for(column <- 0 until controller.getFieldSize) {
-		        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
-		        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
-		        				onclick="handleMovement(@column, @row)"></div>
-		        		}
-		        	}
-					<div class="clear"></div>
-		        }
-		    </div>
+</div>
+
+<div class="row">
+	<div id="gameContent" class="col-md-6">
+		<div id="playground" class="well">
+	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
+	        	@for(column <- 0 until controller.getFieldSize) {
+	        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
+	        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
+	        				onclick="handleMovement(@column, @row)"></div>
+	        		}
+	        	}
+				<div class="clear"></div>
+	        }
 	    </div>
-	    
-		<div class="col-md-6">
-			<div class="well">
-				<h2 class="text-center">Status</h2>
-				<h3 class="text-center" id="status">@controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
-			</div>
-		</div>
-			
-		<div class="col-md-6">
-			<div class="well">
-				<h2 class="text-center">Turn</h2>
-			    <h3 class="text-center" id="turn">@controller.getTurnMessage()</h3>
-		    </div>
-		</div>
     </div>
     
-    <button class="btn btn-default btn-lg btn-block" type="button" onclick="restartGame()">Restart Game</button>
-}
+	<div class="col-md-6">
+		<div class="well">
+			<h2 class="text-center">Status</h2>
+			<h3 class="text-center" id="status">@controller.getStatusMessage() @controller.getCheckmateMessage()</h3>
+		</div>
+	</div>
+		
+	<div class="col-md-6">
+		<div class="well">
+			<h2 class="text-center">Turn</h2>
+		    <h3 class="text-center" id="turn">@controller.getTurnMessage()</h3>
+	    </div>
+	</div>
+</div>

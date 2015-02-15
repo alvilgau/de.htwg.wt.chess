@@ -2,13 +2,22 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Default routes
 GET     /                           controllers.MainController.index()
+GET		/rules						controllers.MainController.rules()
+GET		/play						controllers.MainController.lobby()
+
+# Gaming routes
+GET		/create/:gameName			controllers.MainController.createGame(gameName:String)
+GET		/join/:id					controllers.MainController.joinGame(id:String)
 GET		/chess						controllers.MainController.chess()
 GET		/move/:command				controllers.MainController.handleMovement(command:String)
 GET		/exchange/:figure			controllers.MainController.exchange(figure:String)
-GET		/restart					controllers.MainController.restart()
-GET		/rules						controllers.MainController.rules()
+
+# WebSocket
 GET		/socket						controllers.MainController.connectWebSocket()
+
+# Login
 GET		/login						controllers.MainController.login()
 POST	/login						controllers.MainController.authenticate()
 GET		/logout						controllers.MainController.logout()

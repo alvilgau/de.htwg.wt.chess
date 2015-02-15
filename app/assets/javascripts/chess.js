@@ -1,6 +1,5 @@
 $(function() {
 	$("#exchangeAlert").hide();
-	connect();
 });
 
 // Handle figure movement
@@ -12,6 +11,12 @@ function handleMovement(column, row) {
 			if (data.select) {
 				// set border at selected field
 				$("#pos" + column + row).addClass("selected");
+
+				// mark possible moves
+				data.possMoves.forEach(function(entry) {
+					var pos = "pos" + entry[0] + entry[1];
+					$("#" + pos).addClass("possible")
+				})
 			} else if (data.exchange) {
 				$("#exchangeAlert").show();
 			}
@@ -25,40 +30,4 @@ function exchange(figure) {
 		url : "exchange/" + figure
 	});
 	$("#exchangeAlert").hide();
-}
-
-// Start a new game
-function restartGame() {
-	$.ajax({
-		type : "GET",
-		url : "/restart"
-	});
-	$("#exchangeAlert").hide();
-}
-
-// Update status messages
-function refreshStatusMessages(data) {
-	// update status message
-	$("#status").text(data.statusMessage + " " + data.checkmateMessage);
-	// update turn message
-	$("#turn").text(data.turnMessage);
-}
-
-// Connect with WebSocket
-function connect() {
-	var protocol = location.protocol == "http:" ? "ws://" : "wss://";
-	var socket = new WebSocket(protocol + location.host + "/socket");
-
-	socket.onmessage = function(msg) {
-		var data = JSON.parse(msg.data);
-		refreshStatusMessages(data);
-		if (!data.select && !data.exchange) {
-			// refresh game content
-			$("#gameContent").load("/chess #playground");
-		}
-		if (data.gameover) {
-			$("#modalGameOverContent").text(data.checkmateMessage);
-			$("#modalGameOver").modal("show");
-		}
-	};
 }

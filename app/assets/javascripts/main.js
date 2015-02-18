@@ -11,6 +11,8 @@ $(function() {
 	// create a new multiplayer game
 	$("#formCreateGame").submit(function(event) {
 		var gameName = $("#gameName").val();
+		// remove whitespaces from game name
+		gameName = gameName.replace(/\s+/g, '');
 		$("#pageContent").load("/create/" + gameName);
 		event.preventDefault();
 	});

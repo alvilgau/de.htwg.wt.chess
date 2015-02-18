@@ -9,7 +9,9 @@ function connect() {
 
 	socket.onmessage = function(msg) {
 		var data = JSON.parse(msg.data);
-		if (data.type == "start") {
+		if (data.type == "reloadLobby") {
+			$("#pageContent").load("/play #pageContent > *");
+		} else if (data.type == "start") {
 			$("#pageContent").load("/chess");
 		} else if (data.type == "won") {
 			showModalGameInfo("Won", "Congratulation you have won!");

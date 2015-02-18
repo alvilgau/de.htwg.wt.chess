@@ -1,8 +1,10 @@
 package models;
 
+import play.libs.Json;
 import play.mvc.WebSocket;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Player {
 
@@ -37,5 +39,11 @@ public class Player {
 	public void clear() {
 		this.game = null;
 		this.outStream = null;
+	}
+
+	public void notifyPlayer(String type) {
+		ObjectNode json = Json.newObject();
+		json.put("type", type);
+		this.outStream.write(json);
 	}
 }

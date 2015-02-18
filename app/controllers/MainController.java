@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,6 +31,7 @@ public class MainController extends JavaController {
 	private static final String SESSION_PLAYER_ID = "PLAYER_ID";
 	private static Map<String, GameInstance> gameInstances = new HashMap<String, GameInstance>();
 	private static Map<String, Player> players = new HashMap<String, Player>();
+	private static List<Player> playersInLobby = new ArrayList<>();
 
 	public static Result index() {
 		return ok(views.html.index.render());
@@ -55,6 +58,8 @@ public class MainController extends JavaController {
 		GameInstance instance = new GameInstance(gameName, player,
 				new ChessController());
 		gameInstances.put(instance.getGameId().toString(), instance);
+		playersInLobby.remove(player);
+		notifyPlayersInLobby();
 		return ok(views.html.wait.render());
 	}
 
@@ -68,6 +73,8 @@ public class MainController extends JavaController {
 			return redirect(routes.MainController.lobby());
 		}
 		instance.join(player);
+		playersInLobby.remove(player);
+		notifyPlayersInLobby();
 		return ok(views.html.chess.render(instance.getController()));
 	}
 
@@ -116,12 +123,16 @@ public class MainController extends JavaController {
 
 	public static WebSocket<JsonNode> connectWebSocket() {
 		Player player = getCurrentPlayer();
+		player.addSocketCount(1);
+		if (!playersInLobby.contains(player)) {
+			playersInLobby.add(player);
+		}
+
 		return new WebSocket<JsonNode>() {
 
 			@Override
 			public void onReady(WebSocket.In<JsonNode> in,
 					WebSocket.Out<JsonNode> out) {
-				player.addSocketCount(1);
 				if (player.getOutStream() == null) {
 					player.setOutStream(out);
 				}
@@ -136,7 +147,9 @@ public class MainController extends JavaController {
 								instance.playerLeftGame(player);
 								gameInstances.remove(instance.getGameId()
 										.toString());
+								notifyPlayersInLobby();
 							}
+							player.clear();
 						}
 					}
 				});
@@ -150,6 +163,7 @@ public class MainController extends JavaController {
 	}
 
 	public static Result logout() {
+		players.remove(session(SESSION_PLAYER_ID));
 		session().clear();
 		return redirect(routes.MainController.index());
 	}
@@ -182,6 +196,12 @@ public class MainController extends JavaController {
 
 	private static Player getCurrentPlayer() {
 		return players.get(session(SESSION_PLAYER_ID));
+	}
+
+	private static void notifyPlayersInLobby() {
+		for (Player player : playersInLobby) {
+			player.notifyPlayer("reloadLobby");
+		}
 	}
 
 	public static class Login {

@@ -5,7 +5,6 @@ import java.util.UUID;
 import play.libs.Json;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import de.htwg.chess.controller.IChessController;
 import de.htwg.util.observer.Event;
@@ -64,9 +63,7 @@ public class GameInstance implements IObserver {
 
 	private void notifyPlayer(Player player, String type) {
 		if (this.run) {
-			ObjectNode json = Json.newObject();
-			json.put("type", type);
-			player.getOutStream().write(json);
+			player.notifyPlayer(type);
 		}
 	}
 
@@ -87,7 +84,6 @@ public class GameInstance implements IObserver {
 			this.player2 = null;
 		}
 		this.run = false;
-		player.clear();
 	}
 
 	@Override

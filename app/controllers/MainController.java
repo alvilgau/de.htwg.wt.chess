@@ -154,6 +154,7 @@ public class MainController extends JavaController {
 										.toString());
 								notifyPlayersInLobby();
 							}
+							playersInLobby.remove(player);
 							player.clear();
 						}
 					}

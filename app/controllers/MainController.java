@@ -53,6 +53,8 @@ public class MainController extends JavaController {
 	public static Result createGame(String gameName) {
 		Player player = getCurrentPlayer();
 		if (player.getGame() != null) {
+			flash("error",
+					"Could not create a new game because you are already in a game.");
 			return redirect(routes.MainController.lobby());
 		}
 		GameInstance instance = new GameInstance(gameName, player,
@@ -66,10 +68,13 @@ public class MainController extends JavaController {
 	public static Result joinGame(String id) {
 		GameInstance instance = gameInstances.get(id);
 		if (instance == null) {
+			flash("error", "Could not find the game with the id: " + id);
 			return redirect(routes.MainController.lobby());
 		}
 		Player player = getCurrentPlayer();
 		if (player.getGame() != null) {
+			flash("error",
+					"Could not join the game because you are already in a game.");
 			return redirect(routes.MainController.lobby());
 		}
 		instance.join(player);
@@ -163,6 +168,7 @@ public class MainController extends JavaController {
 	}
 
 	public static Result logout() {
+		flash("success", "You have been logged out!");
 		players.remove(session(SESSION_PLAYER_ID));
 		session().clear();
 		return redirect(routes.MainController.index());

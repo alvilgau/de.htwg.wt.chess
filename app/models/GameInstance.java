@@ -87,7 +87,7 @@ public class GameInstance implements IObserver {
 			this.player2 = null;
 		}
 		this.run = false;
-		player.setGame(null);
+		player.clear();
 	}
 
 	@Override

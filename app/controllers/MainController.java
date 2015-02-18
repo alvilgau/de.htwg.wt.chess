@@ -121,17 +121,22 @@ public class MainController extends JavaController {
 			@Override
 			public void onReady(WebSocket.In<JsonNode> in,
 					WebSocket.Out<JsonNode> out) {
-				player.setInStream(in);
-				player.setOutStream(out);
+				player.addSocketCount(1);
+				if (player.getOutStream() == null) {
+					player.setOutStream(out);
+				}
 
 				in.onClose(new Callback0() {
 					@Override
 					public void invoke() throws Throwable {
-						GameInstance instance = player.getGame();
-						if (instance != null) {
-							instance.playerLeftGame(player);
-							gameInstances.remove(instance.getGameId()
-									.toString());
+						player.addSocketCount(-1);
+						if (player.getSocketCount() == 0) {
+							GameInstance instance = player.getGame();
+							if (instance != null) {
+								instance.playerLeftGame(player);
+								gameInstances.remove(instance.getGameId()
+										.toString());
+							}
 						}
 					}
 				});

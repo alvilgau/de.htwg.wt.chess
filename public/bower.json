@@ -1,0 +1,20 @@
+{
+  "name": "de.htwg.wt.chess",
+  "version": "1.0.0",
+  "homepage": "https://github.com/alvilgau/de.htwg.wt.chess",
+  "description": "Chess WUI with Play",
+  "authors": [
+    "Alexander Vilgauk"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.5"
+  }
+}

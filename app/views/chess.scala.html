@@ -1,4 +1,4 @@
-@(controller: de.htwg.chess.controller.IChessController, data: com.fasterxml.jackson.databind.JsonNode)
+@(controller: de.htwg.chess.controller.IChessController)
 
 <link rel="import" href='@routes.Assets.at("elements/chess-game.html")'>
 
@@ -44,7 +44,7 @@
 <div class="row">
 	<div id="gameContent" class="col-md-6">
 		<div id="playground" class="well">
-			<chess-game fields="@data"></chess-game>
+			<chess-game fields="@controller.getGameBoardAsJson"></chess-game>
 	    </div>
     </div>
     

@@ -97,7 +97,7 @@ public class GameInstance implements IObserver {
 				notifyPlayer(this.player2, "lost");
 			} else {
 				notifyPlayer(this.player1, "lost");
-				notifyPlayer(this.player2, "win");
+				notifyPlayer(this.player2, "won");
 			}
 			this.run = false;
 		}

@@ -80,7 +80,9 @@ public class MainController extends JavaController {
 		instance.join(player);
 		playersInLobby.remove(player);
 		notifyPlayersInLobby();
-		return ok(views.html.chess.render(instance.getController()));
+		IChessController controller = instance.getController();
+		JsonNode gameBoard = Json.parse(controller.getGameBoardAsJson());
+		return ok(views.html.chess.render(controller, gameBoard));
 	}
 
 	public static Result chess() {
@@ -88,7 +90,9 @@ public class MainController extends JavaController {
 		if (instance == null) {
 			return redirect(routes.MainController.lobby());
 		}
-		return ok(views.html.chess.render(instance.getController()));
+		IChessController controller = instance.getController();
+		JsonNode gameBoard = Json.parse(controller.getGameBoardAsJson());
+		return ok(views.html.chess.render(controller, gameBoard));
 	}
 
 	public static Result handleMovement(String command) {

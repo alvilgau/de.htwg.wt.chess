@@ -1,0 +1,75 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="chess-game" attributes="fields">
+	
+	<template>
+		<link rel='stylesheet' href="chess-game.css">
+		<template repeat="{{field in fields}}">
+			<div id="{{field.pos}}" class="field {{field.color}} {{field.figure}} {{field.highlight}}" on-click="{{move}}"></div>
+		</template>
+		<div class="clear"></div>
+	</template>
+	
+	<script>
+		Polymer('chess-game', {
+			possMoves: null,
+			
+			created: function() {
+				this.fields = [];
+			},
+			
+			ready: function() {
+				var x = 0, y = 0;
+				for(i = 0; i < this.fields.length; i++) {
+					this.fields[i].pos = "pos" + x + y;
+					if((x + y) % 2 == 0) {
+						this.fields[i].color = "dark";
+					} else {
+						this.fields[i].color = "light";
+					}
+					x++;
+					if(x == 8) {
+						x = 0;
+						y++;
+					}
+				}
+			},
+			
+			possMovesChanged: function() {
+				var elem = this;
+				this.possMoves.forEach(function(entry) {
+					var pos = entry[0] + entry[1] * 8;
+					elem.fields[pos].highlight = "possible";
+				})
+			},
+			
+			move: function(event, detail, sender) {
+				var elem = this;
+				var pos = sender.id.substring(3, 5);
+				$.ajax({
+					type : "GET",
+					url : "move/" + pos,
+					success : function(data) {
+						if (data.select) {
+							// set border at selected field
+							$(sender).addClass("selected");
+
+							// mark possible moves
+							elem.possMoves = data.possMoves;
+						} else if (data.exchange) {
+							$("#exchangeAlert").show();
+						}
+					}
+				});
+			},
+			
+			exchange: function(figure) {
+				$.ajax({
+					type : "GET",
+					url : "exchange/" + figure
+				});
+				$("#exchangeAlert").hide();
+			}
+		});
+	</script>
+</polymer-element>

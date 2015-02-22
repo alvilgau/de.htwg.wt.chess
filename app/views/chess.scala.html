@@ -1,16 +1,22 @@
-@(controller: de.htwg.chess.controller.IChessController)
+@(controller: de.htwg.chess.controller.IChessController, data: com.fasterxml.jackson.databind.JsonNode)
 
-<link rel='stylesheet' href='@routes.Assets.at("stylesheets/chess.css")' />
-<script type='text/javascript' src='@routes.Assets.at("javascripts/chess.js")'></script>
+<link rel="import" href='@routes.Assets.at("elements/chess-game.html")'>
+
+<script type="text/javascript">
+	var chess = $("chess-game")[0];
+	$(function() {
+		$("#exchangeAlert").hide();
+	});
+</script>
 
 <div id="exchangeAlert" class="alert alert-info" role="alert">
 	<h4><b>Exchange!</b></h4>
 	<p>Pawn reaches end of the playground. Please choose a new Figure for the exchange:</p>
 	<p>
-		<button class="btn btn-default" type="button" onclick="exchange('knight')">Knight</button>
-		<button class="btn btn-default" type="button" onclick="exchange('bishop')">Bishop</button>
-		<button class="btn btn-default" type="button" onclick="exchange('rook')">Rook</button>
-		<button class="btn btn-default" type="button" onclick="exchange('queen')">Queen</button>
+		<button class="btn btn-default" type="button" onclick="chess.exchange('knight')">Knight</button>
+		<button class="btn btn-default" type="button" onclick="chess.exchange('bishop')">Bishop</button>
+		<button class="btn btn-default" type="button" onclick="chess.exchange('rook')">Rook</button>
+		<button class="btn btn-default" type="button" onclick="chess.exchange('queen')">Queen</button>
 	</p>
 </div>
 
@@ -34,18 +40,11 @@
 	</div>
 </div>
 
+
 <div class="row">
 	<div id="gameContent" class="col-md-6">
 		<div id="playground" class="well">
-	        @for(row <- controller.getFieldSize-1 to 0 by -1) {
-	        	@for(column <- 0 until controller.getFieldSize) {
-	        		@defining(if ((column+row) % 2 == 0) "dark" else "light") { fieldColor =>
-	        			<div id="pos@column@row" class="field @fieldColor @controller.getFieldValue(column, row)" 
-	        				onclick="handleMovement(@column, @row)"></div>
-	        		}
-	        	}
-				<div class="clear"></div>
-	        }
+			<chess-game fields="@data"></chess-game>
 	    </div>
     </div>
     

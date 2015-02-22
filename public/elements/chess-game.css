@@ -1,12 +1,5 @@
-#playground {
-	width: 100%;
-	border-style: solid;
-	border-width: 2px;
-	margin-right: auto;
-	margin-left: auto;
-}
-
 .field {
+	box-sizing: border-box;
 	float: left;
 	width: 12.5%;
 	height: 12.5%;

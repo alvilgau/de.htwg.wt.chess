@@ -2,7 +2,14 @@
 
 @main("Playing Chess") {
 
+	<link rel="import" href='@routes.Assets.at("elements/chess-game.html")'>
 	<script type='text/javascript' src='@routes.Assets.at("javascripts/websocket.js")'></script>
+	
+	<script type="text/javascript">
+		$(function() {
+			$("[data-toggle=tooltip]").tooltip();
+		})
+	</script>
 
 	<div class="page-header">
 		<h1>Lobby</h1>
@@ -33,7 +40,10 @@
 					<div class="list-group">
 						@for((id, instance) <- instances) {
 							@if(instance.isRunning) {
-								<a href="#" class="list-group-item list-group-item-success disabled text-center">@instance.getGameName()</a>
+								<a href="#" class="list-group-item list-group-item-success disabled text-center"
+								data-toggle="tooltip" data-placement="top" data-html="true" 
+								title="<chess-game fields='@instance.getController.getGameBoardAsJson'></chess-game>">@instance.getGameName()</a>
+								
 							} else {
 								<a href="#" onclick="joinGame('@id')" class="list-group-item list-group-item-success text-center">@instance.getGameName()</a>
 							}

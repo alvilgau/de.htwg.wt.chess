@@ -12,6 +12,11 @@ h4 {
 	font-size: 17px;
 }
 
+.tooltip-inner {
+	color: initial;
+	padding: 3px 4px;
+}
+
 .page-header h1 {
 	color: white;
 }

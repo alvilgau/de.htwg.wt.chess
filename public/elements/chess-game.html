@@ -1,18 +1,29 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="chess-game" attributes="fields">
+<polymer-element name="chess-game" attributes="fields preview">
 	
 	<template>
 		<link rel='stylesheet' href="chess-game.css">
-		<template repeat="{{field in fields}}">
-			<div id="{{field.pos}}" class="field {{field.color}} {{field.figure}} {{field.highlight}}" on-click="{{move}}"></div>
+		
+		<template repeat="{{field in fields}}" if="{{!preview}}">
+			<div id="{{field.pos}}" class="field {{field.color}} {{field.highlight}}" on-click="{{move}}"></div>
 		</template>
+		
+		<template if="{{preview}}">
+			<div class="preview">
+				<template repeat="{{field in fields}}">
+					<div class="field {{field.color}} {{field.figure}}"></div>
+				</template>
+			</div>
+		</template>
+		
 		<div class="clear"></div>
 	</template>
 	
 	<script>
 		Polymer('chess-game', {
 			possMoves: null,
+			preview: false,
 			
 			created: function() {
 				this.fields = [];

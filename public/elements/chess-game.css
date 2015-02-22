@@ -12,6 +12,11 @@
 	opacity: 0.5;
 }
 
+.preview {
+	width: 200px;
+	height: 200px;
+}
+
 .dark {
 	background-color: #A4785B;
 }

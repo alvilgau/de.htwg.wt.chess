@@ -13,6 +13,7 @@ h4 {
 }
 
 .tooltip-inner {
+	max-width: 210px;
 	color: initial;
 	padding: 3px 4px;
 }

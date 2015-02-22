@@ -42,7 +42,7 @@
 							@if(instance.isRunning) {
 								<a href="#" class="list-group-item list-group-item-success disabled text-center"
 								data-toggle="tooltip" data-placement="top" data-html="true" 
-								title="<chess-game fields='@instance.getController.getGameBoardAsJson'></chess-game>">@instance.getGameName()</a>
+								title="<chess-game fields='@instance.getController.getGameBoardAsJson' preview></chess-game>">@instance.getGameName()</a>
 								
 							} else {
 								<a href="#" onclick="joinGame('@id')" class="list-group-item list-group-item-success text-center">@instance.getGameName()</a>

@@ -1,20 +1,24 @@
-.field {
-	box-sizing: border-box;
-	float: left;
-	width: 12.5%;
-	height: 12.5%;
-	border-style: solid;
-	border-width: 1px;
-}
-
-.field:hover {
-	background-color: lime;
-	opacity: 0.5;
+img {
+	width: 100%;
 }
 
 .preview {
 	width: 200px;
 	height: 200px;
+}
+
+.field {
+	box-sizing: border-box;
+	float: left;
+	width: 12.5%;
+	height: 12.5%;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.field:hover {
+	background-color: lime;
+	opacity: 0.5;
 }
 
 .dark {
@@ -38,57 +42,4 @@
 
 .clear {
 	clear: both;
-}
-
-/* Image content, :after for Firefox and IE */
-.blackL, .blackL:after {
-	content: url("../images/blackBishop.png");
-}
-
-.whiteL, .whiteL:after {
-	content: url("../images/whiteBishop.png");
-}
-
-.blackK, .blackK:after {
-	content: url("../images/blackKing.png");
-}
-
-.whiteK, .whiteK:after {
-	content: url("../images/whiteKing.png");
-}
-
-.blackP, .blackP:after {
-	content: url("../images/blackKnight.png");
-}
-
-.whiteP, .whiteP:after {
-	content: url("../images/whiteKnight.png");
-}
-
-.blackB, .blackB:after {
-	content: url("../images/blackPawn.png");
-}
-
-.whiteB, .whiteB:after {
-	content: url("../images/whitePawn.png");
-}
-
-.blackD, .blackD:after {
-	content: url("../images/blackQueen.png");
-}
-
-.whiteD, .whiteD:after {
-	content: url("../images/whiteQueen.png");
-}
-
-.blackT, .blackT:after {
-	content: url("../images/blackRook.png");
-}
-
-.whiteT, .whiteT:after {
-	content: url("../images/whiteRook.png");
-}
-
-.empty, .empty:after {
-	content: url("../images/empty.png");
 }

@@ -4,15 +4,19 @@
 	
 	<template>
 		<link rel='stylesheet' href="chess-game.css">
-		
+	
 		<template repeat="{{field in fields}}" if="{{!preview}}">
-			<div id="{{field.pos}}" class="field {{field.color}} {{field.highlight}}" on-click="{{move}}"></div>
+			<div id="{{field.pos}}" class="field {{field.color}} {{field.highlight}}" on-click="{{move}}">
+				<img src="assets/images/{{field.img}}.png">
+			</div>
 		</template>
-		
+
 		<template if="{{preview}}">
 			<div class="preview">
 				<template repeat="{{field in fields}}">
-					<div class="field {{field.color}} {{field.figure}}"></div>
+					<div class="field {{field.color}}">
+						<img src="assets/images/{{field.img}}.png">
+					</div>
 				</template>
 			</div>
 		</template>
@@ -24,6 +28,10 @@
 		Polymer('chess-game', {
 			possMoves: null,
 			preview: false,
+			figureImageMap: {"blackL":"blackBishop", "whiteL":"whiteBishop", "blackK":"blackKing",
+				"whiteK":"whiteKing", "blackP":"blackKnight", "whiteP":"whiteKnight",
+				"blackB":"blackPawn", "whiteB":"whitePawn", "blackD":"blackQueen",
+				"whiteD":"whiteQueen", "blackT":"blackRook", "whiteT":"whiteRook", "empty":"empty"},
 			
 			created: function() {
 				this.fields = [];
@@ -33,6 +41,7 @@
 				var x = 0, y = 0;
 				for(i = 0; i < this.fields.length; i++) {
 					this.fields[i].pos = "pos" + x + y;
+					this.fields[i].img = this.figureImageMap[this.fields[i].figure];
 					if((x + y) % 2 == 0) {
 						this.fields[i].color = "dark";
 					} else {

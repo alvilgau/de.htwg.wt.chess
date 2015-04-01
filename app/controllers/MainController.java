@@ -22,13 +22,16 @@ import play.mvc.Security.Authenticator;
 import play.mvc.WebSocket;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
+import de.htwg.chess.ChessModuleWeb;
 import de.htwg.chess.controller.IChessController;
-import de.htwg.chess.controller.impl.ChessController;
 
 public class MainController extends JavaController {
 
 	private static final String SESSION_PLAYER_ID = "PLAYER_ID";
+	private static final Injector injector = Guice.createInjector(new ChessModuleWeb());
 	private static Map<String, GameInstance> gameInstances = new HashMap<String, GameInstance>();
 	private static Map<String, Player> players = new HashMap<String, Player>();
 	private static List<Player> playersInLobby = new ArrayList<>();
@@ -53,12 +56,11 @@ public class MainController extends JavaController {
 	public static Result createGame(String gameName) {
 		Player player = getCurrentPlayer();
 		if (player.getGame() != null) {
-			flash("error",
-					"Could not create a new game because you are already in a game.");
+			flash("error", "Could not create a new game because you are already in a game.");
 			return redirect(routes.MainController.lobby());
 		}
 		GameInstance instance = new GameInstance(gameName, player,
-				new ChessController());
+				injector.getInstance(IChessController.class));
 		gameInstances.put(instance.getGameId().toString(), instance);
 		playersInLobby.remove(player);
 		notifyPlayersInLobby();
@@ -73,8 +75,7 @@ public class MainController extends JavaController {
 		}
 		Player player = getCurrentPlayer();
 		if (player.getGame() != null) {
-			flash("error",
-					"Could not join the game because you are already in a game.");
+			flash("error", "Could not join the game because you are already in a game.");
 			return redirect(routes.MainController.lobby());
 		}
 		instance.join(player);
@@ -136,8 +137,7 @@ public class MainController extends JavaController {
 		return new WebSocket<JsonNode>() {
 
 			@Override
-			public void onReady(WebSocket.In<JsonNode> in,
-					WebSocket.Out<JsonNode> out) {
+			public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) {
 				if (player.getOutStream() == null) {
 					player.setOutStream(out);
 				}
@@ -150,8 +150,7 @@ public class MainController extends JavaController {
 							GameInstance instance = player.getGame();
 							if (instance != null) {
 								instance.playerLeftGame(player);
-								gameInstances.remove(instance.getGameId()
-										.toString());
+								gameInstances.remove(instance.getGameId().toString());
 								notifyPlayersInLobby();
 							}
 							playersInLobby.remove(player);
@@ -220,8 +219,7 @@ public class MainController extends JavaController {
 		public String password;
 
 		public String validate() {
-			if (this.email.equals(defaultEmail)
-					&& this.password.equals(defaultPasswort)) {
+			if (this.email.equals(defaultEmail) && this.password.equals(defaultPasswort)) {
 				return null;
 			} else {
 				return "Invalid user or password";
